@@ -46,19 +46,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         if (keyH.upPressed) {
             levelMap.movement("UP");
-            System.out.println("W");
             controlOfMovementsPorSecond();
         } else if (keyH.downPressed) {
             levelMap.movement("DOWN");
-            System.out.println("S");
             controlOfMovementsPorSecond();
         } else if (keyH.leftPressed) {
             levelMap.movement("LEFT");
-            System.out.println("A");
             controlOfMovementsPorSecond();
         } else if (keyH.rightPressed) {
             levelMap.movement("RIGHT");
-            System.out.println("D");
             controlOfMovementsPorSecond();
         }
 
