@@ -73,18 +73,19 @@ public class GamePanel extends JPanel implements Runnable {
             for (int j = 0; j < levelMap.currentLevel[i].length(); j++) {
                 switch (levelMap.currentLevel[i].charAt(j)) {
                     case 'A' -> {
-                        g2.setColor(Color.red);
-                        g2.fillRect(xPosition, yPosition, TILE_SIZE, TILE_SIZE);
+                        g2.drawImage(levelMap.apple.img, xPosition, yPosition, this);
                         xPosition += TILE_SIZE;
                     }
                     case 'B' -> {
-                        g2.setColor(Color.CYAN);
-                        g2.fillRect(xPosition, yPosition, TILE_SIZE, TILE_SIZE);
+                        g2.drawImage(levelMap.block.img, xPosition, yPosition, this);
                         xPosition += TILE_SIZE;
                     }
                     case 'S' -> {
-                        g2.setColor(Color.green);
-                        g2.fillRect(xPosition, yPosition, TILE_SIZE, TILE_SIZE);
+                        g2.drawImage(levelMap.snake.img, xPosition, yPosition, this);
+                        xPosition += TILE_SIZE;
+                    }
+                    case 'T' -> {
+                        g2.drawImage(levelMap.snakeTorso.img, xPosition, yPosition, this);
                         xPosition += TILE_SIZE;
                     }
                     case '/'-> {

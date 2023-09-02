@@ -11,7 +11,9 @@ public class LevelMap {
 
     private HashMap<Integer, String[]> levelList =  new HashMap<>();
 
-    Snake snake = new Snake();
+    SnakeHead snake = new SnakeHead();
+    SnakeTorso snakeTorso = new SnakeTorso();
+    Block block = new Block();
 
     Apple apple = new Apple();
 
@@ -102,6 +104,8 @@ public class LevelMap {
         int newPosX = snake.getPosX() + moveX;
         int newPosY = snake.getPosY() + moveY;
 
+        createTorsoInMap(snake.posX, snake.posY);
+
         char[] charAux = currentLevel[newPosY].toCharArray();
         charAux[newPosX] = 'S';
         currentLevel[newPosY] = String.valueOf(charAux);
@@ -136,5 +140,11 @@ public class LevelMap {
                 "B-------BBBBB--B/",
                 "B--------------B/",
                 "B--------------B/",});
+    }
+
+    private void createTorsoInMap(int posX, int posY) {
+        char[] charAux = currentLevel[posY].toCharArray();
+        charAux[posX] = 'T';
+        currentLevel[posY] = String.valueOf(charAux);
     }
 }
