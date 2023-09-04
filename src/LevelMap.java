@@ -93,27 +93,25 @@ public class LevelMap {
     public boolean checkIfMovementIsPossible(int moveX, int moveY) {
         if (snake.getPosY() + moveX >= 0 && snake.getPosY() + moveY < currentLevel.length && snake.getPosY() + moveY >= 0 && snake.getPosX() + moveX < currentLevel[0].length()) {
             if (currentLevel[snake.getPosY() + moveY].charAt(snake.getPosX() + moveX) == '-' || currentLevel[snake.getPosY() + moveY].charAt(snake.getPosX() + moveX) == 'A') {
-                if (moveX == -1) {
-                    return !snake.isFlying();
-                } else {
-                    return true;
-                }
+                return true;
             }
         }
         return false;
     }
 
     private void updateMap(int moveX, int moveY) {
-        //TODO: fell down logic
+
         int newPosX = snake.getPosX() + moveX;
         int newPosY = snake.getPosY() + moveY;
 
-        createTorsoInMap(snake.posX, snake.posY);
+        if ((snake.isFlying() && moveX != 0) || currentLevel[snake.getPosY() + 1].charAt(snake.getPosX() + moveX) == '-') {
+            gravityEffect(moveX);
+        } else {
+            createTorsoInMap(snake.posX, snake.posY);
+            createHeadInMap(newPosX, newPosY);
+        }
 
-        char[] charAux = currentLevel[newPosY].toCharArray();
-        charAux[newPosX] = 'S';
-        currentLevel[newPosY] = String.valueOf(charAux);
-
+        snake.setFlying(moveY == -1);
     }
 
     private void saveAllLevelsOnMemory() {
@@ -143,9 +141,14 @@ public class LevelMap {
                 "B-------B----B-B/",
                 "B-------BBBBB--B/",
                 "B--------------B/",
-                "B--------------B/",});
+                "BBBBBBBBBBBBBBBB/",});
     }
 
+    private void createHeadInMap(int posX, int posY) {
+        char[] charAux = currentLevel[posY].toCharArray();
+        charAux[posX] = 'S';
+        currentLevel[posY] = String.valueOf(charAux);
+    }
     private void createTorsoInMap(int posX, int posY) {
         char[] charAux = currentLevel[posY].toCharArray();
         charAux[posX] = 'T';
@@ -155,5 +158,20 @@ public class LevelMap {
     public void researchElements() {
         searchSnakeInitialPosition();
         searchAppleInitialPosition();
+    }
+
+    private void gravityEffect(int moveX) {
+        int newPosY = snake.getPosY();
+        int newPosX = snake.getPosX() + moveX;
+
+        createTorsoInMap(snake.getPosX(), snake.getPosY());
+
+        do {
+            createTorsoInMap(newPosX, newPosY);
+            newPosY++;
+        } while (currentLevel[newPosY].charAt(newPosX) == '-');
+
+        createHeadInMap(newPosX, newPosY - 1);
+        snake.setPosY(newPosY - 1);
     }
 }

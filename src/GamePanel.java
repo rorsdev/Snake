@@ -115,9 +115,4 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    private void restartGame() {
-        currentLevelInt = 0;
-        levelMap.loadNewLevel(currentLevelInt);
-        levelMap.researchElements();
-    }
 }
