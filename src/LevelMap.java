@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class LevelMap {
@@ -6,7 +7,6 @@ public class LevelMap {
     private static final int H_LENGTH = 5;
     private static final int V_LENGTH = 5;
 
-//    public static Cube[][] LEVEL = new Cube[H_LENGTH][V_LENGTH];
     public String[] currentLevel = {};
 
     private HashMap<Integer, String[]> levelList =  new HashMap<>();
@@ -19,16 +19,14 @@ public class LevelMap {
 
     public LevelMap() {
         saveAllLevelsOnMemory();
-        currentLevel = levelList.get(0);
-        searchSnakeInitialPosition();
-        searchAppleInitialPosition();
+        loadNewLevel(0);
     }
 
     public void loadNewLevel(int newLevelNumber) {
         if (levelList.containsKey(newLevelNumber)) {
-            currentLevel = levelList.get(newLevelNumber);
-            searchSnakeInitialPosition();
-            searchAppleInitialPosition();
+            String[] auxCopy = levelList.get(newLevelNumber);
+            currentLevel = Arrays.copyOf(auxCopy, auxCopy.length);
+            researchElements();
         }
     }
 
@@ -44,13 +42,19 @@ public class LevelMap {
     }
 
     private void searchAppleInitialPosition() {
+        boolean check = false;
         for (int i = 0; i < currentLevel.length; i++) {
             for (int j = 0; j < currentLevel[i].length(); j++) {
                 if (currentLevel[i].charAt(j) == 'A') {
                     apple.setPosX(j);
                     apple.setPosY(i);
+                    check = true;
                 }
             }
+        }
+        if (!check) {
+            apple.setPosX(-1);
+            apple.setPosY(-1);
         }
     }
 
@@ -146,5 +150,10 @@ public class LevelMap {
         char[] charAux = currentLevel[posY].toCharArray();
         charAux[posX] = 'T';
         currentLevel[posY] = String.valueOf(charAux);
+    }
+
+    public void researchElements() {
+        searchSnakeInitialPosition();
+        searchAppleInitialPosition();
     }
 }

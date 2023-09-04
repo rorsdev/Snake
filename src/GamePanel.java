@@ -44,7 +44,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if (keyH.upPressed) {
+        if (keyH.restartGame) {
+            currentLevelInt = 0;
+            levelMap.loadNewLevel(currentLevelInt);
+        } else if (keyH.upPressed) {
             levelMap.movement("UP");
             controlOfMovementsPorSecond();
         } else if (keyH.downPressed) {
@@ -110,5 +113,11 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void restartGame() {
+        currentLevelInt = 0;
+        levelMap.loadNewLevel(currentLevelInt);
+        levelMap.researchElements();
     }
 }
