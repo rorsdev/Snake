@@ -31,13 +31,19 @@ public class LevelMap {
     }
 
     private void searchSnakeInitialPosition() {
+        boolean check = false;
         for (int i = 0; i < currentLevel.length; i++) {
             for (int j = 0; j < currentLevel[i].length(); j++) {
                 if (currentLevel[i].charAt(j) == 'S') {
                     snake.setPosX(j);
                     snake.setPosY(i);
+                    check = true;
                 }
             }
+        }
+        if (!check) {
+            snake.setPosX(-2);
+            snake.setPosY(-2);
         }
     }
 
